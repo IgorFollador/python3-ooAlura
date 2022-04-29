@@ -1,3 +1,4 @@
+
 class Conta:
     def __init__(self, numero, titular, saldo, limite):
         print("Construindo objeto ... {}".format(self))
@@ -12,8 +13,12 @@ class Conta:
     def deposita(self, valor):
         self.__saldo += valor
 
+    def __pode_sacar(self, valor_a_sacar):
+        valor_disponivel_a_sacar = self.__saldo + self.__limite
+        return valor_a_sacar <= valor_disponivel_a_sacar
+
     def saca(self, valor):
-        if self.__saldo - valor >= 0:
+        if self.__pode_sacar(valor):
             self.__saldo -= valor
         else:
             print("Saldo insuficiente!")
@@ -22,18 +27,23 @@ class Conta:
         self.saca(valor)
         destino.deposita(valor)
 
-    def get_numero(self):
+    @property
+    def numero(self):
         return self.__saldo
 
-    def get_saldo(self):
+    @property
+    def saldo(self):
         return self.__saldo
 
-    def get_titular(self):
+    @property
+    def titular(self):
         return self.__titular
 
-    def get_limite(self):
+    @property #Representa um getter
+    def limite(self):
         return self.__limite
 
-    def set_limite(self, limite):
+    @limite.setter #Representa um setter
+    def limite(self, limite):
         self.__limite = limite
 
